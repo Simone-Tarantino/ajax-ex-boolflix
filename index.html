@@ -10,11 +10,16 @@
   </head>
   <body>
 
+    <input class="film-input" type="text" name="" value="">
+    <button class="search-film" type="button" name="button">Search</button>
 
+    <div class="filmsList">
+
+    </div>
 
     <script id="entry-template" type="text/x-handlebars-template">
       <div class="film-template">
-        <li></li>
+        <li>{{title}} - {{original_title}} - {{original_language}} - {{vote_average}}</li>
       </div>
     </script>
 
