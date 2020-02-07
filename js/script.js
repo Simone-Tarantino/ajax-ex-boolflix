@@ -89,31 +89,15 @@ $(document).ready(function(){
     });
   }
 
-  // function fromVoteToStars(vote){
-  //   var stars;
-  //   if (vote == 1){
-  //     stars = '<i class="fas fa-star"></i>';
-  //   } else if (vote == 2){
-  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-  //   } else if (vote == 3){
-  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-  //   } else if (vote == 4){
-  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-  //   } else if (vote == 5){
-  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-  //   } else {
-  //     stars = 'S.V';
-  //   }
-  //   return stars;
-  // }
-
   function formVoteToStarsCicle(vote){
-    var totStars;
     var star = '<i class="fas fa-star"></i>';
-    var i = 0;
-    while (vote != i){
-      totStars += star;
-      i++;
+    var totStars = star;
+    if (vote != 0){
+      for (var i = 2; i <= vote; i++){
+        totStars += star;
+      }
+    } else {
+      totStars = 'S.V.';
     }
     console.log(totStars);
     return totStars;
