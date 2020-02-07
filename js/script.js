@@ -85,26 +85,38 @@ $(document).ready(function(){
       console.log('voto originale ' + singleVote);
       var singleVoteOn5 = Math.ceil(singleVote / 2);
       console.log('voto su 5: ' + singleVoteOn5);
-      $(this).html(fromVoteToStars(singleVoteOn5));
+      $(this).html(formVoteToStarsCicle(singleVoteOn5));
     });
   }
 
-  function fromVoteToStars(vote){
-    var stars;
-    if (vote == 1){
-      stars = '<i class="fas fa-star"></i>';
-    } else if (vote == 2){
-      stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-    } else if (vote == 3){
-      stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-    } else if (vote == 4){
-      stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-    } else if (vote == 5){
-      stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
-    } else {
-      stars = 'S.V';
+  // function fromVoteToStars(vote){
+  //   var stars;
+  //   if (vote == 1){
+  //     stars = '<i class="fas fa-star"></i>';
+  //   } else if (vote == 2){
+  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i>';
+  //   } else if (vote == 3){
+  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
+  //   } else if (vote == 4){
+  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
+  //   } else if (vote == 5){
+  //     stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
+  //   } else {
+  //     stars = 'S.V';
+  //   }
+  //   return stars;
+  // }
+
+  function formVoteToStarsCicle(vote){
+    var totStars;
+    var star = '<i class="fas fa-star"></i>';
+    var i = 0;
+    while (vote != i){
+      totStars += star;
+      i++;
     }
-    return stars;
+    console.log(totStars);
+    return totStars;
   }
 
   function fromLangToFlag(){
