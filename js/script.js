@@ -18,23 +18,40 @@
 
 $(document).ready(function(){
   $(document).on('click', '.search-film', function(){
-    var inputFilm = $('.film-input').val();
+    var input = $('.film-input').val();
+    getFilms(input);
+    getTvShows(input);
+  });
+
+  function noResultsMsg(type){
+    var source = $("#no-results-template").html();
+    var template = Handlebars.compile(source);
+    var inputVal = $('.film-input').val();
+    var msg = {
+      message: 'Nessun risultato trovato in' + type + 'per: ' + '"' + inputVal + '"'
+    };
+    var html = template(msg);
+    $('.filmsList').append(html);
+  }
+
+  function getFilms(keyword){
+    var type = '"Films"';
     $.ajax({
       url: 'https://api.themoviedb.org/3/search/movie',
       method: 'GET',
       data: {
         api_key: '1fedcc210c1f6d12a58971ab67657552',
-        query: inputFilm,
+        query: keyword,
         language: 'it-IT'
       },
       success: function(data){
         if (data.total_results > 0){
           clearResults();
-          findFilm(data);
+          findFilmTv(data);
           clearInput();
         } else {
           clearResults();
-          noResultsMsg();
+          noResultsMsg(type);
           clearInput();
         }
       },
@@ -42,26 +59,39 @@ $(document).ready(function(){
         alert("C'è stato un problema " + errors);
       }
     });
-  });
-
-  function noResultsMsg(){
-    var source = $("#no-results-template").html();
-    var template = Handlebars.compile(source);
-    var inputVal = $('.film-input').val();
-    var msg = {
-      message: 'Nessun risultato trovato per: ' + "'" + inputVal + "'"
-    };
-    var html = template(msg);
-    $('.filmsList').append(html);
   }
 
+  function getTvShows(keyword){
+    var type = '"Serie Tv"';
+    $.ajax({
+      url: 'https://api.themoviedb.org/3/search/tv',
+      method: 'GET',
+      data: {
+        api_key: '1fedcc210c1f6d12a58971ab67657552',
+        query: keyword,
+        language: 'it-IT'
+      },
+      success: function(data){
+        if (data.total_results > 0){
+          clearResults();
+          findFilmTv(data);
+          clearInput();
+        } else {
+          clearResults();
+          noResultsMsg(type);
+          clearInput();
+        }
+      },
+      error: function(request, state, errors){
+        alert("C'è stato un problema " + errors);
+      }
+    });
+  }
 
-  function findFilm(filmObj){
+  function findFilmTv(filmObj){
     var source = $("#entry-template").html();
     var template = Handlebars.compile(source);
-
     var resultsFilm = filmObj.results;
-
     for (var i = 0; i < resultsFilm.length; i++){
       var singleFilm = resultsFilm[i];
       var html = template(singleFilm);
@@ -82,9 +112,7 @@ $(document).ready(function(){
   function voteFrom10To5(){
     $('.vote').each(function(){
       var singleVote = $(this).text();
-      console.log('voto originale ' + singleVote);
       var singleVoteOn5 = Math.ceil(singleVote / 2);
-      console.log('voto su 5: ' + singleVoteOn5);
       $(this).html(formVoteToStarsCicle(singleVoteOn5));
     });
   }
@@ -99,7 +127,6 @@ $(document).ready(function(){
     } else {
       totStars = 'S.V.';
     }
-    console.log(totStars);
     return totStars;
   }
 
@@ -107,7 +134,6 @@ $(document).ready(function(){
     $('.lang').each(function(){
       var singleLang = $(this).text();
       var lang = $(this);
-      console.log(singleLang);
       if (singleLang == 'it'){
         lang.html('<img src="img/italy.png" alt="IT">');
       } else if (singleLang == 'en'){
