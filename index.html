@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.js" integrity="sha256-v28e/OFwH4PmlZT+LbqfwlMOE1hImPNesl1Ha52e6pk=" crossorigin="anonymous"></script>
     <script src="js/script.js" charset="utf-8"></script>
@@ -19,7 +20,27 @@
 
     <script id="entry-template" type="text/x-handlebars-template">
       <div class="film-template">
-        <li>{{title}} - {{original_title}} - {{original_language}} - {{vote_average}}</li>
+        <li>
+          {{title}}
+          <ul>
+            <li>
+              Titolo Originale: {{original_title}}
+            </li>
+            <li>
+              Lingua Originale: {{original_language}}
+            </li>
+            <li>
+              Voto: <span class="vote">{{vote_average}}</span>
+            </li>
+          </ul>
+        </li>
+        <hr>
+      </div>
+    </script>
+
+    <script id="no-results-template" type="text/x-handlebars-template">
+      <div class="no-results">
+        {{message}}
       </div>
     </script>
 
