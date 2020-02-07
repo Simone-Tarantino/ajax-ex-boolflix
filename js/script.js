@@ -67,6 +67,7 @@ $(document).ready(function(){
       var html = template(singleFilm);
       $('.filmsList').append(html);
     }
+    fromLangToFlag();
     voteFrom10To5();
   }
 
@@ -100,8 +101,29 @@ $(document).ready(function(){
       stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
     } else if (vote == 5){
       stars = '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>';
+    } else {
+      stars = 'S.V';
     }
     return stars;
+  }
+
+  function fromLangToFlag(){
+    $('.lang').each(function(){
+      var singleLang = $(this).text();
+      var lang = $(this);
+      console.log(singleLang);
+      if (singleLang == 'it'){
+        lang.html('<img src="img/italy.png" alt="IT">');
+      } else if (singleLang == 'en'){
+        lang.html('<img src="img/uk.png" alt="EN">');
+      } else if (singleLang == 'fr'){
+        lang.html('<img src="img/france.png" alt="FR">');
+      } else if (singleLang == 'es'){
+        lang.html('<img src="img/spain.png" alt="SP">');
+      } else if (singleLang == 'de'){
+        lang.html('<img src="img/germany.png" alt="DE">');
+      }
+    });
   }
 
 });

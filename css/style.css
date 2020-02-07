@@ -1,0 +1,9 @@
+.filmsList li li {
+  display: flex;
+  align-items: center;
+}
+
+.lang img {
+  height: 30px;
+  margin-left: 10px;
+}
