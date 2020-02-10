@@ -17,11 +17,14 @@
 // risposta diversi, simili ma non sempre identici)
 
 $(document).ready(function(){
-  $(document).on('click', '.search-film', function(){
+  $('.search-film').click(function(){
     var input = $('.film-input').val();
+    clearResults();
     getFilms(input);
     getTvShows(input);
   });
+
+
 
   function noResultsMsg(type){
     var source = $("#no-results-template").html();
@@ -35,7 +38,6 @@ $(document).ready(function(){
   }
 
   function getFilms(keyword){
-    var type = '"Films"';
     $.ajax({
       url: 'https://api.themoviedb.org/3/search/movie',
       method: 'GET',
@@ -45,14 +47,11 @@ $(document).ready(function(){
         language: 'it-IT'
       },
       success: function(data){
+        var type = 'film';
         if (data.total_results > 0){
-          clearResults();
-          findFilmTv(data);
-          clearInput();
+          findFilmTv(type, data);
         } else {
-          clearResults();
           noResultsMsg(type);
-          clearInput();
         }
       },
       error: function(request, state, errors){
@@ -62,7 +61,6 @@ $(document).ready(function(){
   }
 
   function getTvShows(keyword){
-    var type = '"Serie Tv"';
     $.ajax({
       url: 'https://api.themoviedb.org/3/search/tv',
       method: 'GET',
@@ -72,14 +70,11 @@ $(document).ready(function(){
         language: 'it-IT'
       },
       success: function(data){
+        var type = 'tv';
         if (data.total_results > 0){
-          clearResults();
-          findFilmTv(data);
-          clearInput();
+          findFilmTv(type, data);
         } else {
-          clearResults();
           noResultsMsg(type);
-          clearInput();
         }
       },
       error: function(request, state, errors){
@@ -88,26 +83,29 @@ $(document).ready(function(){
     });
   }
 
-  function findFilmTv(filmObj){
+  function findFilmTv(type, filmObj){
     var source = $("#entry-template").html();
     var template = Handlebars.compile(source);
     var resultsFilm = filmObj.results;
     for (var i = 0; i < resultsFilm.length; i++){
       var singleFilm = resultsFilm[i];
       var html = template(singleFilm);
-      $('.filmsList').append(html);
+      if (type == 'film'){
+        $('.films-list').append(html);
+      } else if (type == 'tv'){
+        $('.tv-series-list').append(html);
+      }
     }
     fromLangToFlag();
     voteFrom10To5();
   }
 
   function clearResults(){
-    $('.filmsList .film-template').hide();
-  }
-
-  function clearInput(){
+    $('.container .films-list').html('');
+    $('.container .tv-series-list').html('');
     $('.film-input').val('');
   }
+
 
   function voteFrom10To5(){
     $('.vote').each(function(){
@@ -147,5 +145,7 @@ $(document).ready(function(){
       }
     });
   }
+
+
 
 });
