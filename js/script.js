@@ -23,6 +23,7 @@ $(document).ready(function(){
     getTvShows(input);
     clearResults();
   });
+  mouseOnDetails();
 
   // FUNZIONI
 
@@ -171,6 +172,17 @@ $(document).ready(function(){
       if (thisCover == "https://image.tmdb.org/t/p/w342"){
         $(this).attr('src','img/nocover.png');
       }
+    });
+  }
+
+  function mouseOnDetails(){
+    $(document).on('mouseenter', '.film-template', function(){
+      var thisFilm = $(this);
+      thisFilm.find('.details').toggleClass('display-none');
+    });
+    $(document).on('mouseleave', '.film-template', function(){
+      var thisFilm = $(this);
+      thisFilm.find('.details').toggleClass('display-none');
     });
   }
 });
