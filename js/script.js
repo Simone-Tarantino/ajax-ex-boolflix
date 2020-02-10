@@ -109,6 +109,7 @@ $(document).ready(function(){
     }
     fromLangToFlag();
     voteFrom10To5();
+    noImg();
   }
 
   // funzione per pulire le liste delle serie in seguito a una nuova ricerca
@@ -164,4 +165,12 @@ $(document).ready(function(){
     });
   }
 
+  function noImg(){
+    $('.cover-img').each(function(){
+      var thisCover = $(this).attr('src');
+      if (thisCover == "https://image.tmdb.org/t/p/w342"){
+        $(this).attr('src','img/nocover.png');
+      }
+    });
+  }
 });
