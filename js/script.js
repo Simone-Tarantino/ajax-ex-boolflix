@@ -19,23 +19,30 @@
 $(document).ready(function(){
   $('.search-film').click(function(){
     var input = $('.film-input').val();
-    clearResults();
     getFilms(input);
     getTvShows(input);
+    clearResults();
   });
 
+  // FUNZIONI
 
+  // funzione messaggio nessun risultato
 
-  function noResultsMsg(type){
+  function noResultsMsg(type, keyword){
     var source = $("#no-results-template").html();
     var template = Handlebars.compile(source);
-    var inputVal = $('.film-input').val();
     var msg = {
-      message: 'Nessun risultato trovato in' + type + 'per: ' + '"' + inputVal + '"'
+      message: 'Nessun risultato trovato in ' + type + ' per: ' + '"' + keyword + '"'
     };
     var html = template(msg);
-    $('.filmsList').append(html);
+    if (type == 'film'){
+      $('.films-list').append(html);
+    } else if (type == 'tv'){
+      $('.tv-series-list').append(html);
+    }
   }
+
+  // funzione chiamata api per ricevere risultati film in base alla ricerca
 
   function getFilms(keyword){
     $.ajax({
@@ -51,7 +58,7 @@ $(document).ready(function(){
         if (data.total_results > 0){
           findFilmTv(type, data);
         } else {
-          noResultsMsg(type);
+          noResultsMsg(type, keyword);
         }
       },
       error: function(request, state, errors){
@@ -59,6 +66,8 @@ $(document).ready(function(){
       }
     });
   }
+
+    // funzione chiamata api per ricevere risultati serie tv in base alla ricerca
 
   function getTvShows(keyword){
     $.ajax({
@@ -74,7 +83,7 @@ $(document).ready(function(){
         if (data.total_results > 0){
           findFilmTv(type, data);
         } else {
-          noResultsMsg(type);
+          noResultsMsg(type, keyword);
         }
       },
       error: function(request, state, errors){
@@ -82,6 +91,8 @@ $(document).ready(function(){
       }
     });
   }
+
+  // funzione per prendere tutti i film dalla chiamata
 
   function findFilmTv(type, filmObj){
     var source = $("#entry-template").html();
@@ -100,12 +111,15 @@ $(document).ready(function(){
     voteFrom10To5();
   }
 
+  // funzione per pulire le liste delle serie in seguito a una nuova ricerca
+
   function clearResults(){
     $('.container .films-list').html('');
     $('.container .tv-series-list').html('');
     $('.film-input').val('');
   }
 
+  // cambio di voto da 10 a 5
 
   function voteFrom10To5(){
     $('.vote').each(function(){
@@ -114,6 +128,8 @@ $(document).ready(function(){
       $(this).html(formVoteToStarsCicle(singleVoteOn5));
     });
   }
+
+  // funzione per cambiare valutazione da voti a stelle
 
   function formVoteToStarsCicle(vote){
     var star = '<i class="fas fa-star"></i>';
@@ -127,6 +143,8 @@ $(document).ready(function(){
     }
     return totStars;
   }
+
+  // funzione per cambiare sigla lingua in bandiera
 
   function fromLangToFlag(){
     $('.lang').each(function(){
@@ -145,7 +163,5 @@ $(document).ready(function(){
       }
     });
   }
-
-
 
 });

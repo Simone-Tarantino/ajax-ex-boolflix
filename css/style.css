@@ -1,3 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #141414;
+  color: #E5E5E5;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0B0B0B;
+}
+
+h1 {
+  color: #E0241B;
+  font-weight: bold;
+}
+
 .filmsList li li {
   display: flex;
   align-items: center;

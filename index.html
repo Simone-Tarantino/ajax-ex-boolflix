@@ -10,9 +10,14 @@
     <title>Boolflix</title>
   </head>
   <body>
-
-    <input class="film-input" type="text" name="" value="">
-    <button class="search-film" type="button" name="button">Search</button>
+    <header>
+      <h1>BOOLFLIX</h1>
+      
+      <div class="search">
+        <input class="film-input" type="text" name="" value="">
+        <button class="search-film" type="button" name="button">Search</button>
+      </div>
+    </header>
 
     <div class="container">
       <h2>Films</h2>
@@ -29,19 +34,20 @@
       <div class="film-template">
         <li>
           <img src="https://image.tmdb.org/t/p/w185/{{poster_path}}" alt=""> {{title}} {{name}}
-          <ul>
-            <li>
-              Titolo Originale: {{original_title}} {{original_name}}
-            </li>
-            <li>
-              Lingua Originale: <span class="lang">{{original_language}}</span>
-            </li>
-            <li>
-              Voto: <span class="vote">{{vote_average}}</span>
-            </li>
-          </ul>
+          <div class="details">
+            <ul>
+              <li>
+                Titolo Originale: {{original_title}} {{original_name}}
+              </li>
+              <li>
+                Lingua Originale: <span class="lang">{{original_language}}</span>
+              </li>
+              <li>
+                Voto: <span class="vote">{{vote_average}}</span>
+              </li>
+            </ul>
+          </div>
         </li>
-        <hr>
       </div>
     </script>
 
