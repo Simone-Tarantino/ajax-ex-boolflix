@@ -12,40 +12,48 @@
   <body>
     <header>
       <h1>BOOLFLIX</h1>
-      
       <div class="search">
         <input class="film-input" type="text" name="" value="">
         <button class="search-film" type="button" name="button">Search</button>
       </div>
     </header>
+    <main>
+      <div class="container">
+        <h2>Films</h2>
+        <div class="films-list">
 
-    <div class="container">
-      <h2>Films</h2>
-      <div class="films-list">
+        </div>
+        <h2>Serie TV</h2>
+        <div class="tv-series-list">
 
+        </div>
       </div>
-      <h2>Serie TV</h2>
-      <div class="tv-series-list">
-
-      </div>
-    </div>
+    </main>
 
     <script id="entry-template" type="text/x-handlebars-template">
       <div class="film-template">
         <li>
-          <img src="https://image.tmdb.org/t/p/w185/{{poster_path}}" alt=""> {{title}} {{name}}
-          <div class="details">
-            <ul>
-              <li>
-                Titolo Originale: {{original_title}} {{original_name}}
-              </li>
-              <li>
-                Lingua Originale: <span class="lang">{{original_language}}</span>
-              </li>
-              <li>
-                Voto: <span class="vote">{{vote_average}}</span>
-              </li>
-            </ul>
+          <div class="cover">
+            <img src="https://image.tmdb.org/t/p/w342{{poster_path}}" alt="">
+            <div class="details">
+              <ul>
+                <li>
+                  <b>Titolo</b>: {{title}} {{name}}
+                </li>
+                <li>
+                  <b>Titolo Originale</b>: {{original_title}} {{original_name}}
+                </li>
+                <li class="lang-li">
+                  <b>Lingua Originale</b>:<span class="lang">{{original_language}}</span>
+                </li>
+                <li>
+                  <b>Voto</b>: <span class="vote">{{vote_average}}</span>
+                </li>
+                <li>
+                  <b>Overview</b>: <div class="overview">{{overview}}</div>
+                </li>
+              </ul>
+            </div>
           </div>
         </li>
       </div>

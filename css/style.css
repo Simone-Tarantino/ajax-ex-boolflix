@@ -15,14 +15,57 @@ header {
   justify-content: space-between;
   align-items: center;
   background-color: #0B0B0B;
+  padding: 10px;
 }
+
+
 
 h1 {
   color: #E0241B;
   font-weight: bold;
 }
 
-.filmsList li li {
+.film-template {
+  height: 527px;
+  width: 352px;
+  margin: 10px;
+}
+
+.cover > img {
+  height: 527px;
+  width: 352px;
+}
+
+.films-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tv-series-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cover {
+  position: relative;
+}
+
+.details {
+  position: absolute;
+  top: 0;
+  background-color: black;
+  height: 527px;
+  width: 352px;
+  padding: 10px;
+  overflow-y: auto;
+  display: none;
+}
+
+li {
+  list-style: none;
+}
+
+.lang-li {
   display: flex;
   align-items: center;
 }
