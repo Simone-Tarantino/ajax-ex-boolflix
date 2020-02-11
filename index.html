@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:500,700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.js" integrity="sha256-v28e/OFwH4PmlZT+LbqfwlMOE1hImPNesl1Ha52e6pk=" crossorigin="anonymous"></script>
@@ -14,21 +15,23 @@
       <h1>BOOLFLIX</h1>
       <div class="search">
         <input class="film-input" type="text" name="" value="">
-        <button class="search-film" type="button" name="button">Search</button>
+        <button class="search-film" type="button" name="button">CERCA</button>
       </div>
     </header>
     <main>
       <div class="container">
-        <h2>Films</h2>
+        <h2 class="display-none">Risultati per Film</h2>
         <div class="films-list">
 
         </div>
-        <h2>Serie TV</h2>
+        <h2 class="display-none">Risultati per Serie TV</h2>
         <div class="tv-series-list">
 
         </div>
       </div>
     </main>
+
+    <!-- hadlebars templates -->
 
     <script id="entry-template" type="text/x-handlebars-template">
       <div class="film-template">
@@ -44,13 +47,13 @@
                   <b>Titolo Originale</b>: {{original_title}} {{original_name}}
                 </li>
                 <li class="lang-li">
-                  <b>Lingua Originale</b>:<span class="lang">{{original_language}}</span>
+                  <b>Lingua Originale </b>: <span class="lang"> {{original_language}}</span>
                 </li>
                 <li>
                   <b>Voto</b>: <span class="vote">{{vote_average}}</span>
                 </li>
                 <li>
-                  <b>Overview</b>: {{overview}}
+                  <b>Overview</b>: <span class="overview">{{overview}}</span>
                 </li>
               </ul>
             </div>

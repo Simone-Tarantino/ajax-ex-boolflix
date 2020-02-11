@@ -18,14 +18,29 @@
 
 $(document).ready(function(){
   $('.search-film').click(function(){
-    var input = $('.film-input').val();
-    getFilms(input);
-    getTvShows(input);
-    clearResults();
+    search();
+  });
+  $('.film-input').keypress(function(event){
+    if(event.which == 13){
+      search();
+    }
   });
   mouseOnDetails();
 
   // FUNZIONI
+
+  function search(){
+    var input = $('.film-input').val();
+    var api_key = '1fedcc210c1f6d12a58971ab67657552';
+    var filmUrl = 'https://api.themoviedb.org/3/search/movie';
+    var tvUrl = 'https://api.themoviedb.org/3/search/tv';
+    var filmType = 'film';
+    var tvType = 'tv';
+    showTypeOnSearch();
+    getData(input, api_key, filmUrl, filmType);
+    getData(input, api_key, tvUrl, tvType);
+    clearResults();
+  }
 
   // funzione messaggio nessun risultato
 
@@ -43,44 +58,18 @@ $(document).ready(function(){
     }
   }
 
-  // funzione chiamata api per ricevere risultati film in base alla ricerca
+  // funzione chiamata api per ricevere risultati film e serie tv in base alla ricerca
 
-  function getFilms(keyword){
+  function getData(keyword, api_key, url, type){
     $.ajax({
-      url: 'https://api.themoviedb.org/3/search/movie',
+      url: url,
       method: 'GET',
       data: {
-        api_key: '1fedcc210c1f6d12a58971ab67657552',
+        api_key: api_key,
         query: keyword,
         language: 'it-IT'
       },
       success: function(data){
-        var type = 'film';
-        if (data.total_results > 0){
-          findFilmTv(type, data);
-        } else {
-          noResultsMsg(type, keyword);
-        }
-      },
-      error: function(request, state, errors){
-        alert("C'è stato un problema " + errors);
-      }
-    });
-  }
-
-    // funzione chiamata api per ricevere risultati serie tv in base alla ricerca
-
-  function getTvShows(keyword){
-    $.ajax({
-      url: 'https://api.themoviedb.org/3/search/tv',
-      method: 'GET',
-      data: {
-        api_key: '1fedcc210c1f6d12a58971ab67657552',
-        query: keyword,
-        language: 'it-IT'
-      },
-      success: function(data){
-        var type = 'tv';
         if (data.total_results > 0){
           findFilmTv(type, data);
         } else {
@@ -111,6 +100,7 @@ $(document).ready(function(){
     fromLangToFlag();
     voteFrom10To5();
     noImg();
+    noOverview();
   }
 
   // funzione per pulire le liste delle serie in seguito a una nuova ricerca
@@ -166,6 +156,8 @@ $(document).ready(function(){
     });
   }
 
+  // funzione che inserisce immagine di default dove non trova immagini di copertina
+
   function noImg(){
     $('.cover-img').each(function(){
       var thisCover = $(this).attr('src');
@@ -174,6 +166,17 @@ $(document).ready(function(){
       }
     });
   }
+
+  function noOverview(){
+    $('.overview').each(function(){
+      var thisOverview = $(this).text();
+      if (thisOverview == ''){
+        $(this).text('Overview non disponibile');
+      }
+    });
+  }
+
+  // funzione che mostra i dettagli del film passando sopra con il mouse
 
   function mouseOnDetails(){
     $(document).on('mouseenter', '.film-template', function(){
@@ -185,4 +188,11 @@ $(document).ready(function(){
       thisFilm.find('.details').toggleClass('display-none');
     });
   }
+
+  // funzione che mostra scritte alla ricerca
+
+  function showTypeOnSearch(){
+    $('.container h2').removeClass('display-none');
+  }
+
 });
