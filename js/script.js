@@ -192,7 +192,7 @@ $(document).ready(function(){
   // funzione che mostra scritte alla ricerca
 
   function showTypeOnSearch(){
-    $('.container h2').removeClass('display-none');
+    $('.type-title').removeClass('display-none');
   }
 
 });
