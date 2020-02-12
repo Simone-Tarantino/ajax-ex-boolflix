@@ -34,7 +34,7 @@ $(document).ready(function(){
     var api_key = '1fedcc210c1f6d12a58971ab67657552';
     var filmUrl = 'https://api.themoviedb.org/3/search/movie';
     var tvUrl = 'https://api.themoviedb.org/3/search/tv';
-    var filmType = 'film';
+    var filmType = 'movie';
     var tvType = 'tv';
     showTypeOnSearch();
     getData(input, api_key, filmUrl, filmType);
@@ -51,7 +51,7 @@ $(document).ready(function(){
       message: 'Nessun risultato trovato in ' + type + ' per: ' + '"' + keyword + '"'
     };
     var html = template(msg);
-    if (type == 'film'){
+    if (type == 'movie'){
       $('.films-list').append(html);
     } else if (type == 'tv'){
       $('.tv-series-list').append(html);
@@ -71,7 +71,7 @@ $(document).ready(function(){
       },
       success: function(data){
         if (data.total_results > 0){
-          findFilmTv(type, data);
+          findFilmTv(type, data, api_key, url);
         } else {
           noResultsMsg(type, keyword);
         }
@@ -84,23 +84,63 @@ $(document).ready(function(){
 
   // funzione per prendere tutti i film dalla chiamata
 
-  function findFilmTv(type, filmObj){
+  function findFilmTv(type, filmObj, api_key){
     var source = $("#entry-template").html();
     var template = Handlebars.compile(source);
+    var source2 = $("#actors").html();
+    var template2 = Handlebars.compile(source2);
     var resultsFilm = filmObj.results;
     for (var i = 0; i < resultsFilm.length; i++){
       var singleFilm = resultsFilm[i];
       var html = template(singleFilm);
-      if (type == 'film'){
+      if (type == 'movie'){
         $('.films-list').append(html);
+        // getActors(singleFilm, api_key, type);
       } else if (type == 'tv'){
         $('.tv-series-list').append(html);
+        getActors(singleFilm, api_key, type);
       }
     }
     fromLangToFlag();
     voteFrom10To5();
     noImg();
     noOverview();
+  }
+
+  // funzione per visualizzare attori del film
+
+  function getActors(api_data, api_key, type){
+    var apiDataId = api_data.id;
+    var url;
+    if (type == 'movie'){
+      url = 'https://api.themoviedb.org/3/movie';
+    } else if (type == 'tv'){
+      url = 'https://api.themoviedb.org/3/tv';
+    }
+    $.ajax({
+      url: url + '/' + apiDataId + '/credits',
+      method: 'GET',
+      data: {
+        api_key: api_key
+      },
+      success: function(data){
+        var resultsActors = data.cast;
+        for (var i = 0 ; i < resultsActors.length; i++){
+          var singleActor = resultsActors[i];
+          appendActor(singleActor);
+        }
+      },
+      error: function(request, state, errors){
+        return alert("C'è stato un problema " + errors);
+      }
+    });
+  }
+
+  function appendActor(actor){
+    var source = $("#actors").html();
+    var template = Handlebars.compile(source);
+    var html = template(actor);
+    $('.actors-template').append(html);
   }
 
   // funzione per pulire le liste delle serie in seguito a una nuova ricerca
@@ -137,24 +177,6 @@ $(document).ready(function(){
   }
 
   // funzione per cambiare sigla lingua in bandiera
-
-  // function fromLangToFlag(){
-  //   $('.lang').each(function(){
-  //     var singleLang = $(this).text();
-  //     var lang = $(this);
-  //     if (singleLang == 'it'){
-  //       lang.html('<img src="img/italy.png" alt="IT">');
-  //     } else if (singleLang == 'en'){
-  //       lang.html('<img src="img/uk.png" alt="EN">');
-  //     } else if (singleLang == 'fr'){
-  //       lang.html('<img src="img/france.png" alt="FR">');
-  //     } else if (singleLang == 'es'){
-  //       lang.html('<img src="img/spain.png" alt="SP">');
-  //     } else if (singleLang == 'de'){
-  //       lang.html('<img src="img/germany.png" alt="DE">');
-  //     }
-  //   });
-  // }
 
   function fromLangToFlag(){
     var availableLangs = [
