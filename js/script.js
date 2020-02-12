@@ -138,20 +138,36 @@ $(document).ready(function(){
 
   // funzione per cambiare sigla lingua in bandiera
 
+  // function fromLangToFlag(){
+  //   $('.lang').each(function(){
+  //     var singleLang = $(this).text();
+  //     var lang = $(this);
+  //     if (singleLang == 'it'){
+  //       lang.html('<img src="img/italy.png" alt="IT">');
+  //     } else if (singleLang == 'en'){
+  //       lang.html('<img src="img/uk.png" alt="EN">');
+  //     } else if (singleLang == 'fr'){
+  //       lang.html('<img src="img/france.png" alt="FR">');
+  //     } else if (singleLang == 'es'){
+  //       lang.html('<img src="img/spain.png" alt="SP">');
+  //     } else if (singleLang == 'de'){
+  //       lang.html('<img src="img/germany.png" alt="DE">');
+  //     }
+  //   });
+  // }
+
   function fromLangToFlag(){
+    var availableLangs = [
+      'it',
+      'en',
+      'fr',
+      'es',
+      'de'
+    ];
     $('.lang').each(function(){
       var singleLang = $(this).text();
-      var lang = $(this);
-      if (singleLang == 'it'){
-        lang.html('<img src="img/italy.png" alt="IT">');
-      } else if (singleLang == 'en'){
-        lang.html('<img src="img/uk.png" alt="EN">');
-      } else if (singleLang == 'fr'){
-        lang.html('<img src="img/france.png" alt="FR">');
-      } else if (singleLang == 'es'){
-        lang.html('<img src="img/spain.png" alt="SP">');
-      } else if (singleLang == 'de'){
-        lang.html('<img src="img/germany.png" alt="DE">');
+      if (availableLangs.includes(singleLang)){
+        $(this).html('<img src="img/' + singleLang + '.png" alt="IT">');
       }
     });
   }
